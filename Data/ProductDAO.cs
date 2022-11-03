@@ -47,5 +47,40 @@ namespace decay_gaming_shop.Data
 
             return returnList;
         }
+
+        public ProductModel FetchProduct(int ID)
+        {
+            // access the db
+            using (SqlConnection connection = new SqlConnection(connectionStr))
+            {
+                string sqlQuery = "SELECT * FROM dbo.Products WHERE Id = @id";
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+                command.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = ID;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                ProductModel product = new ProductModel();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        product.Id = reader.GetInt32(0);
+                        product.Name = reader.GetString(1);
+
+                        Enum.TryParse(reader.GetString(2), out Category category);
+                        product.Category = category;
+
+                        product.ImageSrc = reader.GetString(3);
+                        product.Price = (float)reader.GetDecimal(4);
+                        product.Description = reader.GetString(5);
+                        product.Rating = reader.GetInt32(6);
+                    }
+                }
+                return product;
+            }
+        }
     }
 }

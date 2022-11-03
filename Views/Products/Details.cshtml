@@ -1,0 +1,34 @@
+﻿@model decay_gaming_shop.Models.ProductModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="product">
+        <h3>@Html.DisplayFor(model => model.Name)</h3>
+        <div class="product__img-container">
+            <img src=@Html.DisplayFor(model => model.ImageSrc) />
+        </div>
+        <p>$@Html.DisplayFor(model => model.Price)</p>
+        <p>@Html.DisplayFor(model => model.Description)</p>
+        <p>Rating: @Html.DisplayFor(model => model.Rating)</p>
+        <div class="product__actions">
+            <button>@Html.ActionLink("Back to List", "Index")</button>
+            <button>@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .product__img-container {
+        height: 400px;
+    }
+
+    .product img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+</style>

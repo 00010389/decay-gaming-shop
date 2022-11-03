@@ -18,5 +18,15 @@ namespace decay_gaming_shop.Controllers
             
             return View("Index", products);
         }
+
+        // GET: Product
+        public ActionResult Details(int ID)
+        { 
+            ProductDAO productDAO = new ProductDAO();
+
+            ProductModel product = productDAO.FetchProduct(ID);
+
+            return View("Details", product);
+        }
     }
 }
