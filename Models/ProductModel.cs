@@ -1,4 +1,6 @@
-﻿namespace decay_gaming_shop.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace decay_gaming_shop.Models
 {
     public enum Category
     {
@@ -14,11 +16,17 @@
     public class ProductModel
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public Category Category { get; set; }
+        [Required]
         public string ImageSrc { get; set; }
+        [Required]
         public float Price { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public int Rating { get; set; }
 
         public ProductModel()
