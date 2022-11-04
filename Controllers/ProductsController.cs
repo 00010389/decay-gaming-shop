@@ -31,14 +31,34 @@ namespace decay_gaming_shop.Controllers
 
         public ActionResult Create()
         {
-            return View("Create");
+            return View("ProductForm");
         }
 
+        public ActionResult Edit(int ID)
+        {
+            ProductDAO productDAO = new ProductDAO();
+
+            ProductModel product = productDAO.FetchProduct(ID);
+
+            return View("ProductForm", product);
+        }
+        public ActionResult Delete(int ID)
+        {
+            ProductDAO productDAO = new ProductDAO();
+
+            productDAO.Delete(ID);
+
+            List<ProductModel> products = productDAO.FetchAll();
+
+            return View("Index", products);
+        }
+
+        [HttpPost]
         public ActionResult ProcessCreate(ProductModel productModel)
         {
             ProductDAO productDAO = new ProductDAO();
 
-            productDAO.CreateProduct(productModel);
+            productDAO.CreateOrUpdate(productModel);
 
             return View("Details", productModel);
         }

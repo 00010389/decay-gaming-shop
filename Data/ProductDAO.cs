@@ -48,6 +48,25 @@ namespace decay_gaming_shop.Data
             return returnList;
         }
 
+        internal int Delete(int ID)
+        {
+            // access the db
+            using (SqlConnection connection = new SqlConnection(connectionStr))
+            {
+                string sqlQuery = "DELETE FROM dbo.Products WHERE Id = @ID";
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@ID", System.Data.SqlDbType.VarChar, 50).Value = ID;
+
+                connection.Open();
+
+                int deletedId = command.ExecuteNonQuery();
+
+                return deletedId;
+            }
+        }
+
         public ProductModel FetchProduct(int ID)
         {
             // access the db
@@ -83,14 +102,25 @@ namespace decay_gaming_shop.Data
             }
         }
 
-        public int CreateProduct(ProductModel productModel)
+        public int CreateOrUpdate(ProductModel productModel)
         {
             // access the db
             using (SqlConnection connection = new SqlConnection(connectionStr))
             {
-                string sqlQuery = "INSERT INTO dbo.Products Values(@Name, @Category, @ImageSrc, @Price, @Description, @Rating)";
+                string sqlQuery = "";
+                if (productModel.Id <= 0)
+                {
+                    // Create product
+                    sqlQuery = "INSERT INTO dbo.Products Values(@Name, @Category, @ImageSrc, @Price, @Description, @Rating)";
+                }
+                else
+                {
+                    // Edit product
+                    sqlQuery = "UPDATE dbo.Products SET Name = @Name, Category = @Category, ImageSrc = @ImageSrc, Price = @Price, Description = @Description, Rating = @Rating WHERE Id = @Id"; 
+                }
 
                 SqlCommand command = new SqlCommand(sqlQuery, connection);
+                command.Parameters.Add("@Id", System.Data.SqlDbType.VarChar, 50).Value = productModel.Id;
                 command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 50).Value = productModel.Name;
                 command.Parameters.Add("@Category", System.Data.SqlDbType.VarChar, 30).Value = productModel.Category;
                 command.Parameters.Add("@ImageSrc", System.Data.SqlDbType.VarChar, 500).Value = productModel.ImageSrc;
