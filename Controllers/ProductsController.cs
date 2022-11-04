@@ -28,5 +28,19 @@ namespace decay_gaming_shop.Controllers
 
             return View("Details", product);
         }
+
+        public ActionResult Create()
+        {
+            return View("Create");
+        }
+
+        public ActionResult ProcessCreate(ProductModel productModel)
+        {
+            ProductDAO productDAO = new ProductDAO();
+
+            productDAO.CreateProduct(productModel);
+
+            return View("Details", productModel);
+        }
     }
 }

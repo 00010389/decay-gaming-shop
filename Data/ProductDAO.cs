@@ -82,5 +82,28 @@ namespace decay_gaming_shop.Data
                 return product;
             }
         }
+
+        public int CreateProduct(ProductModel productModel)
+        {
+            // access the db
+            using (SqlConnection connection = new SqlConnection(connectionStr))
+            {
+                string sqlQuery = "INSERT INTO dbo.Products Values(@Name, @Category, @ImageSrc, @Price, @Description, @Rating)";
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+                command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 50).Value = productModel.Name;
+                command.Parameters.Add("@Category", System.Data.SqlDbType.VarChar, 30).Value = productModel.Category;
+                command.Parameters.Add("@ImageSrc", System.Data.SqlDbType.VarChar, 500).Value = productModel.ImageSrc;
+                command.Parameters.Add("@Price", System.Data.SqlDbType.Float, 10).Value = productModel.Price;
+                command.Parameters.Add("@Description", System.Data.SqlDbType.VarChar, 2000).Value = productModel.Description;
+                command.Parameters.Add("@Rating", System.Data.SqlDbType.Int, 1).Value = productModel.Rating;
+
+                connection.Open();
+
+                int newId = command.ExecuteNonQuery();
+
+                return newId;
+            }
+        }
     }
 }

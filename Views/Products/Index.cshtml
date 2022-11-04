@@ -5,10 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
 <div class="container">
     <div class="products-grid">
         @foreach (var item in Model) {
@@ -31,9 +27,15 @@
 
 <style>
     .products-grid {
+        margin-top: 100px;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 40px 20px;
+    }
+    .product {
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
     }
     .product__img-container {
         height: 200px;
@@ -42,5 +44,13 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+    .product__actions {
+        display: flex;
+        column-gap: 10px;
+        height: 100%
+    }
+    .product__actions > button {
+        margin-top: auto;
     }
 </style>
