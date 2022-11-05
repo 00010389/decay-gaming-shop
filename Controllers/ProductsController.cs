@@ -53,7 +53,6 @@ namespace decay_gaming_shop.Controllers
             return View("Index", products);
         }
 
-        [HttpPost]
         public ActionResult ProcessCreate(ProductModel productModel)
         {
             ProductDAO productDAO = new ProductDAO();
