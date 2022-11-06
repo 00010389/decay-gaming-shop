@@ -3,7 +3,7 @@ Description=ASP.NET Web API
 
 [Service]
 WorkingDirectory=/var/www/
-ExecStart=/usr/bin/dotnet /var/www/API_DSCC_8883.dll
+ExecStart=/usr/bin/dotnet /var/www/ShopAPI.dll
 Restart=always
 
 RestartSec=10
